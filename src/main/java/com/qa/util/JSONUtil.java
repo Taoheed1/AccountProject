@@ -10,9 +10,9 @@ public class JSONUtil {
 
 	private Gson gson;
 
-	public JSONUtil() {
-		this.gson = new Gson();
-	}
+//	public JSONUtil() {
+//		this.gson = new Gson();
+//	}
 
 	public String getJSONHashMap(HashMap<Integer, Account> accounts) {
 		return gson.toJson(accounts);
