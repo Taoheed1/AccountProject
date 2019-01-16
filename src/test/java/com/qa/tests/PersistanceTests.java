@@ -6,11 +6,13 @@ import org.junit.Test;
 
 import com.qa.persistance.repository.Service;
 import com.qa.persistence.domain.Account;
+import com.qa.util.JSONUtil;
 
 public class PersistanceTests {
 
-	Service service = new Service();
-	Account account = new Account("Michael", "Jordan", 1);
+	private Service service;
+	private Account account;
+	private JSONUtil util;
 
 	@Test
 	public void addAccountTest() {
