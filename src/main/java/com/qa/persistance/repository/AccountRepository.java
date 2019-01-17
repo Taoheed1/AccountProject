@@ -1,12 +1,15 @@
 package com.qa.persistance.repository;
 
+import com.qa.persistence.domain.Account;
+
 public interface AccountRepository {
 
-	String createAccount(String firstName, String lastName, int accountNumber);
+	String createAccount(Account account);
 
 	String getAllAccounts();
 
 	String deleteAccount(int accountNumber);
 
-	String updateAccount(int accountNumber, String updateField, String userInput);
+	String updateAccount(int accountNumber, Account account);
+	//, String updateField, String userInput);
 }

@@ -31,8 +31,8 @@ public class AccountMapRepository implements AccountRepository {
 	}
 
 	@Transactional(REQUIRED)
-	public String createAccount(String firstName, String lastName, int accountNumber) {
-		accounts.put(counter, new Account(firstName, lastName, counter));
+	public String createAccount(Account account) {
+		accounts.put(counter, new Account());
 		counter++;
 		if (accounts.size() == counter) {
 			return "account successfully created";
@@ -53,17 +53,23 @@ public class AccountMapRepository implements AccountRepository {
 
 	@Override
 	@Transactional(REQUIRED)
-	public String updateAccount(int accountNumber, String updateField, String userInput) {
+	public String updateAccount(int accountNumber,Account account) {
+		//String updateField, String userInput) {
+	
 		// TODO Auto-generated method stub
 
-		switch (userInput) {
-		case "firstName":
-			accounts.get(accountNumber).setFirstName(userInput);
-			break;
-		case "lastName":
-			accounts.get(accountNumber).setLastName(userInput);
-			break;
-		}
+//		switch (userInput) {
+//		case "firstName":
+//			accounts.get(accountNumber).setFirstName(userInput);
+//			break;
+//		case "lastName":
+//			accounts.get(accountNumber).setLastName(userInput);
+//			break;
+//		}
+		accounts.get(accountNumber).setFirstName(account.getFirstName());
+		accounts.get(accountNumber).setLastName(account.getLastName());
+
+
 		return "Account has been successfully updated";
 	}
 
