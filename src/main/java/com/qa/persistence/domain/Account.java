@@ -1,10 +1,21 @@
 package com.qa.persistence.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.Size;
+
+@Entity
 public class Account {
 
-	private String firstName;
-	private String lastName;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountNumber;
+	@Size(min = 2, max = 20)
+	private String firstName;
+	@Size(min = 2, max = 20)
+	private String lastName;
 
 	public Account(String firstName, String lastName, int accountNumber) {
 		this.firstName = firstName;

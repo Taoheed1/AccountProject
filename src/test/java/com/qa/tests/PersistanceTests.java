@@ -12,7 +12,7 @@ public class PersistanceTests {
 
 	private Service service;
 	private Account account;
-	private JSONUtil util;
+	//private JSONUtil util;
 
 	@Test
 	public void addAccountTest() {
