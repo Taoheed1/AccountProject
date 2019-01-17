@@ -1,21 +1,30 @@
 package com.qa.persistance.repository;
 
+import static javax.transaction.Transactional.TxType.REQUIRED;
+import static javax.transaction.Transactional.TxType.SUPPORTS;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 
 import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 
-@Transactional
+@Transactional(SUPPORTS)
+@Alternative
 public class AccountMapRepository implements AccountRepository {
 
 	HashMap<Integer, Account> accounts = new HashMap<>();
 	private int counter = 1;
+	@PersistenceContext(unitName="alternative")
+	private EntityManager manager;
 	@Inject
 	private JSONUtil util;
 
@@ -23,12 +32,14 @@ public class AccountMapRepository implements AccountRepository {
 		return util.getJSONForObject(accounts);
 	}
 
+	@Transactional(REQUIRED)
 	public String createAccount(String firstName, String lastName, int accountNumber) {
 		accounts.put(counter, new Account(firstName, lastName, counter));
 		counter++;
 		return null;
 	}
 
+	@Transactional(REQUIRED)
 	public String deleteAccount(int counter) {
 		accounts.remove(counter);
 
@@ -36,6 +47,7 @@ public class AccountMapRepository implements AccountRepository {
 	}
 
 	@Override
+	@Transactional(REQUIRED)
 	public String updateAccount(int accountNumber, String updateField, String userInput) {
 		// TODO Auto-generated method stub
 

@@ -3,11 +3,15 @@ package com.qa.business.service;
 import javax.inject.Inject;
 
 import com.qa.persistance.repository.AccountRepository;
+import com.qa.util.JSONUtil;
 
 public class AccountServiceImpl implements AccountService {
 
 	@Inject
 	private AccountRepository repo;
+	
+	@Inject
+	private JSONUtil util;
 
 	@Override
 	public String getAllAccounts() {
