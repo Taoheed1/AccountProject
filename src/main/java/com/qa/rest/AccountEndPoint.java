@@ -10,19 +10,19 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 import com.qa.business.service.AccountService;
-import com.qa.business.service.AccountServiceImpl;
+//import com.qa.business.service.AccountServiceImpl;
 import com.qa.persistence.domain.Account;
 
 @Path("/account")
-public class AccountEndPoint implements AccountService {
+public class AccountEndPoint {
 
 	@Inject
-	private AccountServiceImpl service;
+	private AccountService service;
 
 	@Path("/json")
 	@POST
 	@Produces({ "application/json" })
-	public String createAccount(Account account) {
+	public String createAccount(String account) {
 			//, String lastName, int accountNumber) {
 		// TODO Auto-generated method stub
 		return service.createAccount(account);
@@ -36,23 +36,26 @@ public class AccountEndPoint implements AccountService {
 		return service.getAllAccounts();
 	}
 
-	@Path("/json{id}")
+	@Path("/json/{id}")
 	@DELETE
 	@Produces({ "application/json" })
-	public String deleteAccount(@PathParam("id")int accountNumber) {
+	public String deleteAccount(@PathParam("id") int accountNumber) {
 		// TODO Auto-generated method stub
 		return service.deleteAccount(accountNumber);
 	}
 
-	@Path("/json")
+	@Path("/json/{id}")
 	@PUT
-	@Produces({ "application/json" })
-	public String updateAccount(@PathParam("id")int accountNumber,Account account) {
+	//@Produces({ "application/json" })
+	public String updateAccount(@PathParam("id") int accountNumber,String account) {
 		//String updateField, String userInput) {
 	
 		// TODO Auto-generated method stub
 		return service.updateAccount(accountNumber,account);
 				//updateField, userInput);
+	}
+	public void setService(AccountService service) {
+		this.service = service;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.qa.util;
 
+import javax.enterprise.context.SessionScoped;
+
 import com.google.gson.Gson;
 
 public class JSONUtil {

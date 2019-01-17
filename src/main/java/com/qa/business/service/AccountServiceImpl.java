@@ -20,7 +20,9 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String createAccount(Account account) {
+	public String createAccount(Account accountJSON) {
+		Account account = util.getObjectForJSON(accountJSON, Account.class)
+				
 		if (account.getAccountNumber() == 999) {
 			return "{\"message\": \"this account it blocked\"}";
 		} else {
@@ -35,10 +37,10 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public String updateAccount(int accountNumber, Account account) {
-			//String updateField, String userInput) {
+		// String updateField, String userInput) {
 		// TODO Auto-generated method stub
 		return repo.updateAccount(accountNumber, account);
-		//, updateField, userInput);
+		// , updateField, userInput);
 	}
 	//
 	// @Override
