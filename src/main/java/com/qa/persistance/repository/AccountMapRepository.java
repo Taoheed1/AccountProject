@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import javax.transaction.Transactional;
 
 import com.qa.persistence.domain.Account;
@@ -23,8 +22,7 @@ public class AccountMapRepository implements AccountRepository {
 
 	HashMap<Integer, Account> accounts = new HashMap<>();
 	private int counter = 1;
-	@PersistenceContext(unitName="alternative")
-	private EntityManager manager;
+
 	@Inject
 	private JSONUtil util;
 
@@ -36,14 +34,21 @@ public class AccountMapRepository implements AccountRepository {
 	public String createAccount(String firstName, String lastName, int accountNumber) {
 		accounts.put(counter, new Account(firstName, lastName, counter));
 		counter++;
-		return null;
+		if (accounts.size() == counter) {
+			return "account successfully created";
+		} else {
+			return "account creation failed";
+		}
 	}
 
 	@Transactional(REQUIRED)
-	public String deleteAccount(int counter) {
-		accounts.remove(counter);
-
-		return null;
+	public String deleteAccount(int accountNumber) {
+		if (accounts.get(accountNumber) != null) {
+			accounts.remove(accountNumber);
+			return "account successfully deleted";
+		} else {
+			return "account does not exist";
+		}
 	}
 
 	@Override

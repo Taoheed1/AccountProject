@@ -9,7 +9,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Inject
 	private AccountRepository repo;
-	
+
 	@Inject
 	private JSONUtil util;
 
@@ -20,7 +20,11 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public String createAccount(String firstName, String lastName, int accountNumber) {
-		return repo.createAccount(firstName, lastName, accountNumber);
+		if (accountNumber == 999) {
+			return "{\"message\": \"this account it blocked\"}";
+		} else {
+			return repo.createAccount(firstName, lastName, accountNumber);
+		}
 	}
 
 	@Override
