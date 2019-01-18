@@ -10,8 +10,7 @@ import java.util.stream.Collectors;
 
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+
 import javax.transaction.Transactional;
 
 import com.qa.persistence.domain.Account;
@@ -23,8 +22,7 @@ public class AccountMapRepository implements AccountRepository {
 
 	HashMap<Integer, Account> accounts = new HashMap<>();
 	private int counter = 1;
-	@PersistenceContext(unitName="alternative")
-	private EntityManager manager;
+
 	@Inject
 	private JSONUtil util;
 
@@ -33,32 +31,45 @@ public class AccountMapRepository implements AccountRepository {
 	}
 
 	@Transactional(REQUIRED)
-	public String createAccount(String firstName, String lastName, int accountNumber) {
-		accounts.put(counter, new Account(firstName, lastName, counter));
+	public String createAccount(Account account) {
+		accounts.put(counter, new Account());
 		counter++;
-		return null;
+		if (accounts.size() == counter) {
+			return "account successfully created";
+		} else {
+			return "account creation failed";
+		}
 	}
 
 	@Transactional(REQUIRED)
-	public String deleteAccount(int counter) {
-		accounts.remove(counter);
-
-		return null;
+	public String deleteAccount(int accountNumber) {
+		if (accounts.get(accountNumber) != null) {
+			accounts.remove(accountNumber);
+			return "account successfully deleted";
+		} else {
+			return "account does not exist";
+		}
 	}
 
 	@Override
 	@Transactional(REQUIRED)
-	public String updateAccount(int accountNumber, String updateField, String userInput) {
+	public String updateAccount(int accountNumber,Account account) {
+		//String updateField, String userInput) {
+	
 		// TODO Auto-generated method stub
 
-		switch (userInput) {
-		case "firstName":
-			accounts.get(accountNumber).setFirstName(userInput);
-			break;
-		case "lastName":
-			accounts.get(accountNumber).setLastName(userInput);
-			break;
-		}
+//		switch (userInput) {
+//		case "firstName":
+//			accounts.get(accountNumber).setFirstName(userInput);
+//			break;
+//		case "lastName":
+//			accounts.get(accountNumber).setLastName(userInput);
+//			break;
+//		}
+		accounts.get(accountNumber).setFirstName(account.getFirstName());
+		accounts.get(accountNumber).setLastName(account.getLastName());
+
+
 		return "Account has been successfully updated";
 	}
 

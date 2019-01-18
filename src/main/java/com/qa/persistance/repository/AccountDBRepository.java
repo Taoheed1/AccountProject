@@ -34,8 +34,8 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Override
 	@Transactional(REQUIRED)
-	public String createAccount(String firstName, String lastName, int accountNumber) {
-		Account anAccount = util.getObjectForJSON(createAccount(firstName, lastName, accountNumber), Account.class);
+	public String createAccount(Account account) {
+		Account anAccount = util.getObjectForJSON(createAccount(account), Account.class);
 		manager.persist(anAccount);
 		return "{\"message\": \"account has been sucessfully added\"}";
 	}
@@ -56,24 +56,29 @@ public class AccountDBRepository implements AccountRepository {
 
 	@Override
 	@Transactional(REQUIRED)
-	public String updateAccount(int accountNumber, String updateField, String userInput) {
+	public String updateAccount(int accountNumber, Account account) {
+		//, String updateField, String userInput) {
+	
 
 		Account accountInDB = findAccount(accountNumber);
-		if (accountInDB != null) {
-			switch (updateField) {
-			case "firstName":
-				accountInDB.setFirstName(userInput);
-				break;
-			case "lastName":
-				accountInDB.setLastName(userInput);
-				break;
-			case "accountNumber":
-				accountInDB.setAccountNumber((int) accountNumber);
-				break;
-			}
-			manager.persist(accountInDB);
-		}
-		return "{\"message\": \"account has been sucessfully updated\"}";
+//		if (accountInDB != null) {
+//			switch (updateField) {
+//			case "firstName":
+//				accountInDB.setFirstName(userInput);
+//				break;
+//			case "lastName":
+//				accountInDB.setLastName(userInput);
+//				break;
+//			case "accountNumber":
+//				accountInDB.setAccountNumber((int) accountNumber);
+//				break;
+//			}
+//			manager.persist(accountInDB);
+//		}
+		manager.persist(accountInDB);
+		manager.remove(accountInDB);
+		
+	return "{\"message\": \"account has been sucessfully updated\"}";
 	}
 
 	public Account findAccount(int accountNumber) {

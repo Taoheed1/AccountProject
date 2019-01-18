@@ -17,6 +17,10 @@ public class Account {
 	@Size(min = 2, max = 20)
 	private String lastName;
 
+	public Account() {
+
+	}
+
 	public Account(String firstName, String lastName, int accountNumber) {
 		this.firstName = firstName;
 		this.lastName = lastName;

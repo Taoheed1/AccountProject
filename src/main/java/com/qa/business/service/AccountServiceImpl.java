@@ -3,13 +3,14 @@ package com.qa.business.service;
 import javax.inject.Inject;
 
 import com.qa.persistance.repository.AccountRepository;
+import com.qa.persistence.domain.Account;
 import com.qa.util.JSONUtil;
 
 public class AccountServiceImpl implements AccountService {
 
 	@Inject
 	private AccountRepository repo;
-	
+
 	@Inject
 	private JSONUtil util;
 
@@ -19,8 +20,14 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String createAccount(String firstName, String lastName, int accountNumber) {
-		return repo.createAccount(firstName, lastName, accountNumber);
+	public String createAccount(Account accountJSON) {
+		Account account = util.getObjectForJSON(accountJSON, Account.class)
+				
+		if (account.getAccountNumber() == 999) {
+			return "{\"message\": \"this account it blocked\"}";
+		} else {
+			return repo.createAccount(account);
+		}
 	}
 
 	@Override
@@ -29,9 +36,11 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public String updateAccount(int accountNumber) {
+	public String updateAccount(int accountNumber, Account account) {
+		// String updateField, String userInput) {
 		// TODO Auto-generated method stub
-		return null;
+		return repo.updateAccount(accountNumber, account);
+		// , updateField, userInput);
 	}
 	//
 	// @Override
